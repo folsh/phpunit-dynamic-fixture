@@ -74,6 +74,77 @@ class MyTest extends PHPUnit_Framework_TestCase {
 }
 ```
 
+Params
+------
+
+If you want to add some parameters in your function, add them between parenthèses.
+Warning: at this time, you can only add simple types (see exemples)
+Types accepted:
+- string
+- json
+- array (single level)
+- numeric (convert in string !)
+
+```php
+class MyTest extends PHPUnit_Framework_TestCase {
+
+    private $name1;
+    private $name2;
+    private $list;
+
+    /**
+     * Must be public
+     */
+    public function setUpNames($name1, $name2)
+    {
+        $this->name1 = $name1;
+        $this->name2 = $name2;
+    }
+
+    public function initContext()
+    {
+        //...
+    }
+
+    /**
+     * @setUpContext setUpNames("Nicolas", "Cedric")
+     */
+    public function testSetUpNames()
+    {
+        //$this->name1 is "Nicolas"
+        //$this->name2 is "Cedric"
+    }
+}
+```
+
+```php
+class MyTest extends PHPUnit_Framework_TestCase {
+
+    private $list;
+
+    /**
+     * Must be public
+     */
+    public function setUpArray(array $list)
+    {
+        $this->list = $list;
+    }
+
+    public function initContext()
+    {
+        //...
+    }
+
+    /**
+     * @setUpContext setUpArray(["Nicolas", "Cedric"])
+     */
+    public function testSetUpArray()
+    {
+        //$this->list is array("Nicolas", "Cedric")
+    }
+}
+```
+
 Customize
 ---------
 
