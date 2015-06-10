@@ -18,7 +18,7 @@ Installation
 Simply add this to your `composer.json` file:
 ```js
 "require": {
-    "nikoms/phpunit-dynamic-fixture": "dev-master"
+    "folsh/phpunit-dynamic-fixture": "dev-master"
 }
 ```
 
