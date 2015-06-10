@@ -77,7 +77,7 @@ class MyTest extends PHPUnit_Framework_TestCase {
 Params
 ------
 
-If you want to add some parameters in your function, add them between parenthèses.
+If you want to add some parameters in your function, add them between brackets.
 Warning: at this time, you can only add simple types (see exemples)
 Types accepted:
 - string
