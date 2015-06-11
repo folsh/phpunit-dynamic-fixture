@@ -1,6 +1,6 @@
 <?php
 
-namespace Nikoms\DynamicFixture;
+namespace folsh\DynamicFixture;
 
 use PHPUnit_Framework_Test;
 

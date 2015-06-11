@@ -25,6 +25,6 @@
         </whitelist>
     </filter>
     <listeners>
-        <listener class="Nikoms\DynamicFixture\DynamicFixtureListener" file="src/DynamicFixtureListener.php" />
+        <listener class="folsh\DynamicFixture\DynamicFixtureListener" file="src/DynamicFixtureListener.php" />
     </listeners>
 </phpunit>

@@ -1,6 +1,6 @@
 <?php
 
-use Nikoms\DynamicFixture\DynamicFixtureListener;
+use folsh\DynamicFixture\DynamicFixtureListener;
 
 class DynamicFixtureListenerTest extends \PHPUnit_Framework_TestCase {
     /**
