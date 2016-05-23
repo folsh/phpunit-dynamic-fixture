@@ -2,7 +2,8 @@
 
 use folsh\DynamicFixture\DynamicFixtureListener;
 
-class DynamicFixtureListenerTest extends \PHPUnit_Framework_TestCase {
+class DynamicFixtureListenerTest extends \PHPUnit_Framework_TestCase
+{
     /**
      * @var \ExampleWithListenerTest
      */
@@ -54,21 +55,14 @@ class DynamicFixtureListenerTest extends \PHPUnit_Framework_TestCase {
     public function testNoSetUp()
     {
         $this->callTest(__FUNCTION__);
-         $this->assertAttributeValue('name', null);
+        $this->assertAttributeValue('name', null);
         $this->assertAttributeValue('firstName',null);
     }
 
     public function testSetUpNameAndFirstName()
     {
         $this->callTest(__FUNCTION__);
-         $this->assertAttributeValue('name', 'Name');
+        $this->assertAttributeValue('name', 'Name');
         $this->assertAttributeValue('firstName','FirstName');
-    }
-
-    public function testSetUpWithNonExistentMethod()
-    {
-        $this->callTest(__FUNCTION__);
-         $this->assertAttributeValue('name', null);
-        $this->assertAttributeValue('firstName',null);
     }
 }
