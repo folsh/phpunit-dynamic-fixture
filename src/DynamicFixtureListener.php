@@ -61,8 +61,6 @@ class DynamicFixtureListener extends \PHPUnit_Framework_BaseTestListener
                 $methodName = $matches[2];
                 $args = empty($matches[3]) ? "" : $matches[3];
 
-                var_dump("B".$methodName);
-
                 $this->callMethod(new $className(), $methodName, $args);
             }
         }
