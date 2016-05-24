@@ -54,7 +54,7 @@ class ExampleWithListenerAndParametersTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @setUpContext setUpArray(['Elise', " Thibault"])
+     * @setUpContext setUpArray([ 'Elise', " Thibault"])
      */
     public function testSetUpArray()
     {
@@ -62,6 +62,21 @@ class ExampleWithListenerAndParametersTest extends PHPUnit_Framework_TestCase
         $this->assertCount(2, $this->list);
         $this->assertSame('Elise', $this->list[0]);
         $this->assertSame(' Thibault', $this->list[1]);
+    }
+
+    /**
+     * @setUpContext setUpArray(["Elise"=>" Durant", "Thibault " => "Dupont"])
+     */
+    public function testSetUpAssociativeArray()
+    {
+        $this->assertInternalType('array', $this->list);
+        $this->assertCount(2, $this->list);
+
+        $this->assertArrayHasKey('Elise', $this->list);
+        $this->assertArrayHasKey('Thibault ', $this->list);
+
+        $this->assertSame(' Durant', $this->list["Elise"]);
+        $this->assertSame('Dupont', $this->list["Thibault "]);
     }
 
     /**

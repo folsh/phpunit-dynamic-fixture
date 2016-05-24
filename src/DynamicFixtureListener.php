@@ -5,7 +5,7 @@ namespace folsh\DynamicFixture;
 class DynamicFixtureListener extends \PHPUnit_Framework_BaseTestListener
 {
     const REGEX_FUNCTION_PROVIDER = '/^([a-zA-Z0-9_-]+)(\([^\(\)]*\))?$/';
-    const REGEX_CLASS_AND_FUNCTION_PROVIDER = '/^([a-zA-Z0-9_-]+)::([a-zA-Z0-9_-]+)(\([^\(\)]*\))?$/';
+    const REGEX_CLASS_AND_FUNCTION_PROVIDER = '/^([\\a-zA-Z0-9_-]+)::([a-zA-Z0-9_-]+)(\([^\(\)]*\))?$/';
     const REGEX_PARAMS_SPLITER = '/({[^}]*}+|\[[^\]]*\]+|[^,]+)/';
 
     private $annotationName;
@@ -49,7 +49,7 @@ class DynamicFixtureListener extends \PHPUnit_Framework_BaseTestListener
     private function callMethods(\PHPUnit_Framework_TestCase $testCase, array $methods)
     {
         foreach ($methods as $method) {
-            
+
             if (preg_match(self::REGEX_FUNCTION_PROVIDER, $method, $matches) === 1) {
                 $methodName = $matches[1];
                 $args = empty($matches[2]) ? "" : $matches[2];
@@ -97,17 +97,49 @@ class DynamicFixtureListener extends \PHPUnit_Framework_BaseTestListener
         $result = $matches[1];
 
         array_walk($result, function (&$item) {
-            if (strpos(trim($item), '[') === 0) { //Is it a table ?
-                $item = array_map(function ($item) {
-                    return $this->getItemClean(trim($item));
-                }, explode(',', trim($item, '[] ')));
-            } else { //Other types
-                $item = $this->getItemClean($item);
-            }
+            $item = $this->getItemClean($item);
 
+            if (strpos($item, '[') === 0) { //Is it a table ?
+                $item = $this->getStringToArray($item);
+            }
         });
 
         return $result;
+    }
+
+    /**
+     * "['en'=>'value one','fr'=>'valeur un']"
+     *
+     * became:
+     *
+     * array(
+     *  'en' => 'value one',
+     *  'fr'=>'valeur un'
+     * )
+     *
+     * array multiple is no handle
+     *
+     * @param $string
+     * @return array
+     */
+    public function getStringToArray($string)
+    {
+        $arrayResult = array();
+
+        $list = explode(',', trim($string, '[]'));
+        foreach ($list as $itemArray) {
+
+            if (strpos($itemArray, '=>') !== false){
+                list($key, $value) = explode('=>', $itemArray);
+
+                $arrayResult[$this->getItemClean($key)] = $this->getItemClean($value);
+
+            } else {
+                $arrayResult[] = $this->getItemClean($itemArray);
+            }
+        }
+
+        return $arrayResult;
     }
 
     /**
@@ -116,6 +148,6 @@ class DynamicFixtureListener extends \PHPUnit_Framework_BaseTestListener
      */
     private function getItemClean($string)
     {
-        return trim($string, "\"'");
+        return trim(trim($string), "\"'");
     }
 }
