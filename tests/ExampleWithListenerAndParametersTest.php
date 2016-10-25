@@ -118,7 +118,7 @@ class ExampleWithListenerAndParametersTest extends PHPUnit_Framework_TestCase
      * @param $string2
      * @param $json
      */
-    public function setUpComplex($string1, array $list1, $integer1, array $list2, $string2, $json)
+    public function setUpComplex($string1, array $list1, $integer1, array $list2, $string2, $json, $string3, $float1)
     {
         $this->params = array(
             'string1' => $string1,
@@ -126,12 +126,14 @@ class ExampleWithListenerAndParametersTest extends PHPUnit_Framework_TestCase
             'integer1' => $integer1,
             'list2' => $list2,
             'string2' => $string2,
-            'json' => json_decode($json, true)
+            'json' => json_decode($json, true),
+            'string3' => $string3,
+            'float' => $float1
         );
     }
 
     /**
-     * @setUpContext setUpComplex("aaa",[10,11],99,["bbb","ccc"],"xyz",{"ddd": {"eee":"fff","ggg":"hhh"}})
+     * @setUpContext setUpComplex("aaa",[10,11],99,["bbb","ccc"],"xyz",{"ddd": {"eee":"fff","ggg":"hhh,jjj"}}, "ttt,uuu", 98.5)
      */
     public function testSetUpComplex()
     {
@@ -157,6 +159,10 @@ class ExampleWithListenerAndParametersTest extends PHPUnit_Framework_TestCase
         $this->assertNotEmpty($this->params['json']['ddd']['ggg']);
 
         $this->assertSame('fff', $this->params['json']['ddd']['eee']);
-        $this->assertSame('hhh', $this->params['json']['ddd']['ggg']);
+        $this->assertSame('hhh,jjj', $this->params['json']['ddd']['ggg']);
+
+        $this->assertSame('ttt,uuu', $this->params['string3']);
+
+        $this->assertSame('98.5', $this->params['float']);
     }
 }

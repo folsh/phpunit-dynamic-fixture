@@ -6,7 +6,7 @@ class DynamicFixtureListener extends \PHPUnit_Framework_BaseTestListener
 {
     const REGEX_FUNCTION_PROVIDER = '/^([a-zA-Z0-9_-]+)(\([^\(\)]*\))?$/';
     const REGEX_CLASS_AND_FUNCTION_PROVIDER = '/^([\\a-zA-Z0-9_-]+)::([a-zA-Z0-9_-]+)(\([^\(\)]*\))?$/';
-    const REGEX_PARAMS_SPLITER = '/({[^}]*}+|\[[^\]]*\]+|[^,]+)/';
+    const REGEX_PARAMS_SPLITER = '/({[^}]*}+|\[[^\]]*\]+|"(?:[^",].)+|[0-9.]+)/';
 
     private $annotationName;
 
