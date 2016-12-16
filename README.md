@@ -151,7 +151,7 @@ Customize
 If you don't like the name of the annotation, you can change it by passing a new one in the constructor:
 
 ```xml
- <listener class="Nikoms\DynamicFixture\DynamicFixtureListener" file="vendor/nikoms/phpunit-dynamic-fixture/src/DynamicFixtureListener.php">
+ <listener class="folsh\DynamicFixture\DynamicFixtureListener" file="vendor/folsh/phpunit-dynamic-fixture/src/DynamicFixtureListener.php">
     <arguments>
         <string>myCustomSetUp</string>
     </arguments>
