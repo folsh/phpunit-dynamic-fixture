@@ -33,7 +33,7 @@ To activate the plugin. Add the listener to your phpunit.xml(.dist) file:
 <phpunit>
     ...
     <listeners>
-        <listener class="Nikoms\DynamicFixture\DynamicFixtureListener" file="vendor/nikoms/phpunit-dynamic-fixture/src/DynamicFixtureListener.php" />
+        <listener class="folsh\DynamicFixture\DynamicFixtureListener" file="vendor/folsh/phpunit-dynamic-fixture/src/DynamicFixtureListener.php" />
     </listeners>
 </phpunit>
 ```
