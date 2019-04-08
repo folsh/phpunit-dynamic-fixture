@@ -28,7 +28,7 @@ class DynamicFixtureListener implements TestListener
      * A test started.
      * @param \PHPUnit_Framework_Test $test
      */
-    public function startTest(Test $test)
+    public function startTest(Test $test): void
     {
         //That's nasty, but saved my life :)
         if ($test instanceof Test) {
