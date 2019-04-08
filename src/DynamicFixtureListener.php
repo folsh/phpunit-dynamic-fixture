@@ -2,13 +2,19 @@
 
 namespace folsh\DynamicFixture;
 
-class DynamicFixtureListener extends \PHPUnit_Framework_BaseTestListener
+use PHPUnit\Framework\Test;
+use PHPUnit\Framework\TestListener;
+use PHPUnit\Framework\TestListenerDefaultImplementation;
+
+class DynamicFixtureListener implements TestListener
 {
     const REGEX_FUNCTION_PROVIDER = '/^([a-zA-Z0-9_-]+)(\([^\(\)]*\))?$/';
     const REGEX_CLASS_AND_FUNCTION_PROVIDER = '/^([\\a-zA-Z0-9_-]+)::([a-zA-Z0-9_-]+)(\([^\(\)]*\))?$/';
     const REGEX_PARAMS_SPLITER = '/({[^}]*}+|\[[^\]]*\]+|"(?:[^",].)+|[0-9.]+)/';
 
     private $annotationName;
+
+	use TestListenerDefaultImplementation;
 
     /**
      * @param string $annotationName
@@ -22,10 +28,10 @@ class DynamicFixtureListener extends \PHPUnit_Framework_BaseTestListener
      * A test started.
      * @param \PHPUnit_Framework_Test $test
      */
-    public function startTest(\PHPUnit_Framework_Test $test)
+    public function startTest(Test $test)
     {
         //That's nasty, but saved my life :)
-        if ($test instanceof \PHPUnit_Framework_TestCase) {
+        if ($test instanceof Test) {
             $this->setUpContext($test);
         }
     }
@@ -33,7 +39,7 @@ class DynamicFixtureListener extends \PHPUnit_Framework_BaseTestListener
     /**
      * @param \PHPUnit_Framework_TestCase $testCase
      */
-    private function setUpContext(\PHPUnit_Framework_TestCase $testCase)
+    private function setUpContext($testCase)
     {
         $annotations = $testCase->getAnnotations();
         if (isset($annotations['method'][$this->annotationName])) {
@@ -46,7 +52,7 @@ class DynamicFixtureListener extends \PHPUnit_Framework_BaseTestListener
      * @param array $methods
      * @throws \Exception
      */
-    private function callMethods(\PHPUnit_Framework_TestCase $testCase, array $methods)
+    private function callMethods($testCase, array $methods)
     {
         foreach ($methods as $method) {
 
@@ -151,3 +157,4 @@ class DynamicFixtureListener extends \PHPUnit_Framework_BaseTestListener
         return trim(trim($string), "\"'");
     }
 }
+
